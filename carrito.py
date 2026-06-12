@@ -3,6 +3,13 @@ class Carrito:
     def __init__(self):
         self.productos = []
 
+    def agregar_producto(self, nombre, cantidad, precio):
+        self.productos.append({
+            "nombre": nombre,
+            "cantidad": cantidad,
+            "precio": precio
+        })
+
     def calcular_total(self):
         return sum(prod["precio"] * prod["cantidad"] for prod in self.productos)
 

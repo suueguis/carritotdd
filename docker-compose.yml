@@ -1,0 +1,33 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: carrito_user
+      POSTGRES_PASSWORD: carrito_pass
+      POSTGRES_DB: carrito_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U carrito_user -d carrito_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: carrito_db
+      DB_USER: carrito_user
+      DB_PASSWORD: carrito_pass
+    ports:
+      - "5000:5000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:

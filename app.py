@@ -99,6 +99,17 @@ def calcular_total():
     return jsonify({"total": carrito.calcular_total()})
 
 
+# Endpoint agregado en la Parte 5: total del carrito aplicando un descuento
+@app.route("/total/descuento/<int:porcentaje>", methods=["GET"])
+def total_con_descuento(porcentaje):
+    carrito = cargar_carrito_desde_bd()
+    try:
+        total = carrito.aplicar_descuento(porcentaje)
+    except ValueError as error:
+        return jsonify({"error": str(error)}), 400
+    return jsonify({"porcentaje": porcentaje, "total_con_descuento": total})
+
+
 if __name__ == "__main__":
     inicializar_base_datos()
     app.run(host="0.0.0.0", port=5000)

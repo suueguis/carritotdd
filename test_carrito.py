@@ -43,5 +43,15 @@ class TestCarritoCompras(unittest.TestCase):
         self.assertEqual(carrito.productos[0]["cantidad"], 3)
         self.assertEqual(carrito.calcular_total(), 75000)
 
+    def test_aplicar_descuento(self):
+        carrito = Carrito()
+        carrito.agregar_producto("Camisa", 2, 50000) # 100,000
+
+        # Aplicamos un 10% de descuento sobre el total
+        total = carrito.aplicar_descuento(10)
+
+        # 100,000 - 10% = 90,000
+        self.assertEqual(total, 90000)
+
 if __name__ == '__main__':
     unittest.main()

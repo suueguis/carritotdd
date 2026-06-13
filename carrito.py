@@ -15,3 +15,9 @@ class Carrito:
 
     def eliminar_producto(self, nombre_producto):
         self.productos = [p for p in self.productos if p["nombre"] != nombre_producto]
+
+    def aplicar_descuento(self, porcentaje):
+        if porcentaje < 0 or porcentaje > 100:
+            raise ValueError("El porcentaje debe estar entre 0 y 100")
+        total = self.calcular_total()
+        return total - (total * porcentaje / 100)
